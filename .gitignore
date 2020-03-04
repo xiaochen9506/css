@@ -1,0 +1,10 @@
+node_modules
+dist
+app
+doc/
+.tmp
+config/*.map
+logs
+/views
+yarn-error.log
+.idea/
