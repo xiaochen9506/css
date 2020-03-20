@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>not，empty伪类使用</title>
+    <link rel="stylesheet" href="./common.css">
+    <style>
+        .list {
+            padding: 20px;
+        }
+        .list:empty {
+            display: none;
+        }
+        .item {
+            line-height: 40px;
+        }
+        .not-tips {
+            display: none;
+        }
+        .loading-tips {
+            display: none;
+        }
+        .list:empty + .not-tips {
+            display: block;
+        }
+        .list:not(:empty) ~ .loading-tips {
+            display: block;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>使用伪类not和empty减少v-if, v-show等操作</h2>
+        <ul class="list">
+            <li class="item" v-for="i in index">{{i}}</li>
+        </ul>
+        <div class="not-tips text-center">再无数据</div>
+        <div class="loading-tips text-center">{{finish ? '没有更多' : '加载中'}}</div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    index: 0,
+                    finish: false,
+                };
+            },
+            mounted: function () {
+                this.getList();
+            },
+            methods: {
+                getList: function () {
+                    var self = this;
+                    if (self.finish) return;
+                    setTimeout(function () {
+                        self.index += 5;
+                        self.finish = self.index >= 15;
+                        self.getList();
+                    }, 500);
+                },
+            }
+        });
+    </script>
+</body>
+</html>
